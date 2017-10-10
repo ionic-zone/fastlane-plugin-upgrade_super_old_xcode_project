@@ -10,7 +10,7 @@ module Fastlane
       end
 
       def self.authors
-        ["Jan Piotrowski"]
+        ["Jan Piotrowski", "mathiasAichinger", "hjanuschka"]
       end
 
       def self.return_value
@@ -18,8 +18,7 @@ module Fastlane
       end
 
       def self.details
-        # Optional:
-        "This plugin can upgrade super old Xcode (pre Xcode8) projects to Xcode8 format. and thereby enables using the `automatic_code_signing` actions on it."
+        "This plugin can upgrade super old Xcode (pre Xcode 8) projects to Xcode 8 format and thereby enables using the `automatic_code_signing` actions on it."
       end
 
       def self.available_options
@@ -33,11 +32,7 @@ module Fastlane
       end
 
       def self.is_supported?(platform)
-        # Adjust this if your plugin only works for a particular platform (iOS vs. Android, for example)
-        # See: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
-        #
-        # [:ios, :mac, :android].include?(platform)
-        true
+        [:ios, :mac].include?(platform)
       end
     end
   end

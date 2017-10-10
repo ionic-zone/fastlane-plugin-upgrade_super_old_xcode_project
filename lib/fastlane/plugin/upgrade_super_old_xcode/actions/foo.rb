@@ -6,10 +6,12 @@ module Fastlane
         # print params
         FastlaneCore::PrintTable.print_values(config: params, title: "Summary for Update Project Codesigning")
         
-        # create project.pbxproj path and check if exists
+        # create project.pbxproj path and check if file exists
         path = params[:path]
         path = File.join(File.expand_path(path), "project.pbxproj")
         UI.user_error!("Could not find path to project config '#{path}'. Pass the path to your project (not workspace)!") unless File.exist?(path)
+
+        # start message
         UI.message("Updating the Automatic Codesigning flag to #{params[:use_automatic_signing] ? 'enabled' : 'disabled'} for the given project '#{path}'")
         
         # open project
@@ -26,6 +28,7 @@ module Fastlane
             UI.important("Upgrading project to use xcode8 signing stuff")
             
             # exit if no team_id param
+            # In my previous adaption of this code I completely removed this
             unless params[:team_id]
               UI.important("TEAM id is not set")
               UI.error!("Provide :team_id")
@@ -41,7 +44,9 @@ module Fastlane
               new_hash = {}
               new_hash["CreatedOnToolsVersion"] = "8.0"
               new_hash["DevelopmentTeam"] = params[:team_id]
-              new_hash["ProvisioningStyle"] = params[:use_automatic_signing] ? 'Automatic' : 'Manual' # TODO Do we need this as param? Fixed? To what of the two values?
+              new_hash["ProvisioningStyle"] = params[:use_automatic_signing] ? 'Automatic' : 'Manual' 
+              # TODO Above: Do we need this as param? Fixed? To what of the two values? 
+              # In my previous adaption of this code I chose "Manual" - unfortunately didn't document why :/
               target_attr_hash[target.uuid] = new_hash
             end
             project.root_object.attributes["TargetAttributes"] = target_attr_hash
@@ -51,7 +56,10 @@ module Fastlane
             project.build_configurations.each do |config|
               config.build_settings['CODE_SIGN_IDENTITY[sdk=iphoneos*]'] = config.name == "Release" ? 'iPhone Distribution' : "iPhone Development"
             end
-            
+
+            # save project
+            project.save
+
           else
             UI.user_error!("canceled upgrade")
           end

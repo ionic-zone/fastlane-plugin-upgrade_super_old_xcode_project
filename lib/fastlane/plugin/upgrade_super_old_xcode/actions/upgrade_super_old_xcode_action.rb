@@ -12,8 +12,7 @@ module Fastlane
         UI.user_error!("Could not find path to project config '#{path}'. Pass the path to your project (not workspace)!") unless File.exist?(path)
 
         # start message
-        # TODO Do we need this here?
-        UI.message("Updating the Automatic Codesigning flag to #{params[:use_automatic_signing] ? 'enabled' : 'disabled'} for the given project '#{path}'")
+        UI.message("Upgrading Xcode project if necessary")
 
         # open project
         project = Xcodeproj::Project.open(params[:path])
@@ -22,7 +21,7 @@ module Fastlane
         # if there is no TargetAttributes
         unless project.root_object.attributes["TargetAttributes"]
           UI.error("Xcode project seems to be a very old project file format")
-          UI.important("Upgrading project to use Xcode8 signing stuff")
+          UI.important("Upgrading project to use Xcode8 signing")
 
           # exit if no team_id param
           # TODO In my previous adaption of this code I completely removed this. Here as well?
@@ -57,6 +56,8 @@ module Fastlane
 
           # save project
           project.save
+        else
+          UI.important("No Xcode project upgrade necessary")
         end
       end
 

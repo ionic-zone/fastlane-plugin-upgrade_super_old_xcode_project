@@ -1,3 +1,9 @@
 lane :test do
-  upgrade_super_old_xcode
+  team_id = CredentialsManager::AppfileConfig.try_fetch_value(:team_id)
+  xcodeprojpath = "platforms/ios/MyApp.xcodeproj"
+  
+  upgrade_super_old_xcode(
+    path: xcodeprojpath,
+    team_id: team_id
+  )
 end

@@ -1,6 +1,12 @@
 # upgrade_super_old_xcode plugin
 
-[![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-upgrade_super_old_xcode)
+[![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-ionic) [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/ionic-zone/fastlane-plugin-upgrade_super_old_xcode/blob/master/LICENSE)
+[![Gem](https://img.shields.io/gem/v/fastlane-plugin-upgrade_super_old_xcode.svg?style=flat)](http://rubygems.org/gems/fastlane-plugin-upgrade_super_old_xcode)
+
+This _fastlane_ plugin can upgrade super old Xcode project files to a format current tooling can work with (pre Xcode 8 to Xcode 8), by adding the missing attributes to the project config.
+
+It is 99% based on previous code that was part of [fastlane-plugin-update_project_codesigning (depreacted!)](https://github.com/hjanuschka/fastlane-plugin-update_project_codesigning) (which got merged into the core action [automatic_code_signing.rb](https://github.com/fastlane/fastlane/blob/master/fastlane/lib/fastlane/actions/automatic_code_signing.rb) - when the relevant code unfortunately got removed).
+
 
 ## Getting Started
 
@@ -10,17 +16,9 @@ This project is a [_fastlane_](https://github.com/fastlane/fastlane) plugin. To 
 fastlane add_plugin upgrade_super_old_xcode
 ```
 
-## About upgrade_super_old_xcode
-
-Upgrades super old Xcode projects to Xcode 8
-
-**Note to author:** Add a more detailed description about this plugin here. If your plugin contains multiple actions, make sure to mention them here.
-
 ## Example
 
 Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plugin. Try it by cloning the repo, running `fastlane install_plugins` and `bundle exec fastlane test`.
-
-**Note to author:** Please set up a sample project to make it easy for users to explore what your plugin does. Provide everything that is necessary to try out the plugin in this project (including a sample Xcode/Android project if necessary)
 
 ## Run tests for this plugin
 

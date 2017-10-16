@@ -4,7 +4,7 @@ module Fastlane
     class UpgradeSuperOldXcodeAction < Action
       def self.run(params)
         # print params
-        FastlaneCore::PrintTable.print_values(config: params, title: "Summary for Update Project Codesigning")
+        FastlaneCore::PrintTable.print_values(config: params, title: "Summary for UpgradeSuperOldXcodeAction")
 
         # create project.pbxproj path and check if file exists
         path = params[:path]
@@ -12,6 +12,7 @@ module Fastlane
         UI.user_error!("Could not find path to project config '#{path}'. Pass the path to your project (not workspace)!") unless File.exist?(path)
 
         # start message
+        # TODO Do we need this here? 
         UI.message("Updating the Automatic Codesigning flag to #{params[:use_automatic_signing] ? 'enabled' : 'disabled'} for the given project '#{path}'")
 
         # open project
@@ -20,49 +21,42 @@ module Fastlane
         # upgrade super old xcode project
         # if there is no TargetAttributes
         unless project.root_object.attributes["TargetAttributes"]
-          UI.error("Seems to be a very old project file format")
-          UI.error("PLEASE BACKUP ALL FILES before doing this.")
-
-          # prompt for confirmation or look for ENV variable
-          if ENV["FL_PROJECT_SIGNING_FORCE_UPGRADE"] || UI.confirm("Proceed with upgrade to xcode8 format?")
-            UI.important("Upgrading project to use xcode8 signing stuff")
-            
-            # exit if no team_id param
-            # In my previous adaption of this code I completely removed this
-            unless params[:team_id]
-              UI.important("TEAM id is not set")
-              UI.error!("Provide :team_id")
-            end
-
-            # set upgrade marker to xcode8
-            project.root_object.attributes["LastUpgradeCheck"] = "0800"
-            target_attr_hash = {}
-
-            # for each target add the TargetAttributes Entry
-            # setting team id, and signing mode
-            project.root_object.targets.each do |target|
-              new_hash = {}
-              new_hash["CreatedOnToolsVersion"] = "8.0"
-              new_hash["DevelopmentTeam"] = params[:team_id]
-              new_hash["ProvisioningStyle"] = params[:use_automatic_signing] ? 'Automatic' : 'Manual' 
-              # TODO Above: Do we need this as param? Fixed? To what of the two values? 
-              # In my previous adaption of this code I chose "Manual" - unfortunately didn't document why :/
-              target_attr_hash[target.uuid] = new_hash
-            end
-            project.root_object.attributes["TargetAttributes"] = target_attr_hash
-
-            # for each configuration set a signing identity
-            # TODO what does this actually do? Does this directly change the `project`? (Oh no, have to learn some ruby to understand...)
-            project.build_configurations.each do |config|
-              config.build_settings['CODE_SIGN_IDENTITY[sdk=iphoneos*]'] = config.name == "Release" ? 'iPhone Distribution' : "iPhone Development"
-            end
-
-            # save project
-            project.save
-
-          else
-            UI.user_error!("canceled upgrade")
+          UI.error("Xcode project seems to be a very old project file format")
+          UI.important("Upgrading project to use Xcode8 signing stuff")
+          
+          # exit if no team_id param
+          # TODO In my previous adaption of this code I completely removed this. Here as well?
+          unless params[:team_id]
+            UI.important("TEAM id is not set")
+            UI.error!("Provide :team_id")
           end
+
+          # Add TargetAttributes to project attributes
+          # for each target an entry with team id and signing mode
+          target_attr_hash = {}          
+          project.root_object.targets.each do |target|
+            new_hash = {}
+            new_hash["CreatedOnToolsVersion"] = "8.0"
+            new_hash["DevelopmentTeam"] = params[:team_id]
+            new_hash["ProvisioningStyle"] = params[:use_automatic_signing] ? 'Automatic' : 'Manual' 
+            # TODO Above: Do we need this as param? Fixed? To what of the two values? 
+            # In my previous adaption of this code I chose "Manual" - unfortunately didn't document why :/
+            target_attr_hash[target.uuid] = new_hash
+          end
+          project.root_object.attributes["TargetAttributes"] = target_attr_hash
+
+          # for each configuration set a signing identity
+          # TODO what does this actually do? Do we need it?
+          # TODO Does this directly change the `project`? (reference vs. value)
+          project.build_configurations.each do |config|
+            config.build_settings['CODE_SIGN_IDENTITY[sdk=iphoneos*]'] = config.name == "Release" ? 'iPhone Distribution' : "iPhone Development"
+          end
+
+          # set upgrade marker to xcode8
+          project.root_object.attributes["LastUpgradeCheck"] = "0800"                    
+
+          # save project
+          project.save
         end
       end
 
@@ -100,7 +94,7 @@ module Fastlane
                                        end),
           FastlaneCore::ConfigItem.new(key: :team_id,
                                        env_name: "FASTLANE_TEAM_ID",
-                                       optional: true,
+                                       optional: false,
                                        description: "Team ID, is used when upgrading project",
                                        is_string: true),
           FastlaneCore::ConfigItem.new(key: :use_automatic_signing,

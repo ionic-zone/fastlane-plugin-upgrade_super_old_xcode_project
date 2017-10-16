@@ -12,7 +12,7 @@ module Fastlane
         UI.user_error!("Could not find path to project config '#{path}'. Pass the path to your project (not workspace)!") unless File.exist?(path)
 
         # start message
-        # TODO Do we need this here? 
+        # TODO Do we need this here?
         UI.message("Updating the Automatic Codesigning flag to #{params[:use_automatic_signing] ? 'enabled' : 'disabled'} for the given project '#{path}'")
 
         # open project
@@ -23,7 +23,7 @@ module Fastlane
         unless project.root_object.attributes["TargetAttributes"]
           UI.error("Xcode project seems to be a very old project file format")
           UI.important("Upgrading project to use Xcode8 signing stuff")
-          
+
           # exit if no team_id param
           # TODO In my previous adaption of this code I completely removed this. Here as well?
           unless params[:team_id]
@@ -33,13 +33,13 @@ module Fastlane
 
           # Add TargetAttributes to project attributes
           # for each target an entry with team id and signing mode
-          target_attr_hash = {}          
+          target_attr_hash = {}
           project.root_object.targets.each do |target|
             new_hash = {}
             new_hash["CreatedOnToolsVersion"] = "8.0"
             new_hash["DevelopmentTeam"] = params[:team_id]
-            new_hash["ProvisioningStyle"] = params[:use_automatic_signing] ? 'Automatic' : 'Manual' 
-            # TODO Above: Do we need this as param? Fixed? To what of the two values? 
+            new_hash["ProvisioningStyle"] = params[:use_automatic_signing] ? 'Automatic' : 'Manual'
+            # TODO: Above: Do we need this as param? Fixed? To what of the two values?
             # In my previous adaption of this code I chose "Manual" - unfortunately didn't document why :/
             target_attr_hash[target.uuid] = new_hash
           end
@@ -53,7 +53,7 @@ module Fastlane
           end
 
           # set upgrade marker to xcode8
-          project.root_object.attributes["LastUpgradeCheck"] = "0800"                    
+          project.root_object.attributes["LastUpgradeCheck"] = "0800"
 
           # save project
           project.save
@@ -68,10 +68,6 @@ module Fastlane
         "Upgrades super old Xcode projects to Xcode 8"
       end
 
-      def self.details
-        "Upgrades super old Xcode projects to Xcode 8 by adding the missing attributes to the project config"
-      end
-
       def self.authors
         ["Jan Piotrowski", "mathiasAichinger", "hjanuschka"]
       end
@@ -81,7 +77,7 @@ module Fastlane
       end
 
       def self.details
-        "This plugin can upgrade super old Xcode (pre Xcode 8) projects to Xcode 8 format and thereby enables using the `automatic_code_signing` actions on it."
+        "This plugin can upgrade super old Xcode (pre Xcode 8) projects to Xcode 8 format by adding the missing attributes to the project config and thereby enables using the `automatic_code_signing` actions on it."
       end
 
       def self.available_options

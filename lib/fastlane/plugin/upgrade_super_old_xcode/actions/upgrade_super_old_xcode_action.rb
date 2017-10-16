@@ -19,7 +19,9 @@ module Fastlane
 
         # upgrade super old xcode project
         # if there is no TargetAttributes
-        unless project.root_object.attributes["TargetAttributes"]
+        if project.root_object.attributes["TargetAttributes"]
+          UI.important("No Xcode project upgrade necessary")
+        else
           UI.error("Xcode project seems to be a very old project file format")
           UI.important("Upgrading project to use Xcode8 signing")
 
@@ -56,8 +58,6 @@ module Fastlane
 
           # save project
           project.save
-        else
-          UI.important("No Xcode project upgrade necessary")
         end
       end
 

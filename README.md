@@ -1,7 +1,7 @@
-# upgrade_super_old_xcode plugin
+# upgrade_super_old_xcode_project plugin
 
-[![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-ionic) [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/ionic-zone/fastlane-plugin-upgrade_super_old_xcode/blob/master/LICENSE)
-[![Gem](https://img.shields.io/gem/v/fastlane-plugin-upgrade_super_old_xcode.svg?style=flat)](http://rubygems.org/gems/fastlane-plugin-upgrade_super_old_xcode)
+[![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-ionic) [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/ionic-zone/fastlane-plugin-upgrade_super_old_xcode_project/blob/master/LICENSE)
+[![Gem](https://img.shields.io/gem/v/fastlane-plugin-upgrade_super_old_xcode_project.svg?style=flat)](http://rubygems.org/gems/fastlane-plugin-upgrade_super_old_xcode_project)
 
 This _fastlane_ plugin can upgrade super old Xcode project files to a format current tooling can work with (pre Xcode 8 to Xcode 8), by adding the missing attributes to the project config.
 
@@ -10,10 +10,10 @@ It is 99% based on previous code that was part of [fastlane-plugin-update_projec
 
 ## Getting Started
 
-This project is a [_fastlane_](https://github.com/fastlane/fastlane) plugin. To get started with `fastlane-plugin-upgrade_super_old_xcode`, add it to your project by running:
+This project is a [_fastlane_](https://github.com/fastlane/fastlane) plugin. To get started with `fastlane-plugin-upgrade_super_old_xcode_project`, add it to your project by running:
 
 ```bash
-fastlane add_plugin upgrade_super_old_xcode
+fastlane add_plugin upgrade_super_old_xcode_project
 ```
 
 ## Example

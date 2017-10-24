@@ -10,6 +10,6 @@ module SpecHelper
 end
 
 require 'fastlane' # to import the Action super class
-require 'fastlane/plugin/upgrade_super_old_xcode' # import the actual plugin
+require 'fastlane/plugin/upgrade_super_old_xcode_project' # import the actual plugin
 
 Fastlane.load_actions # load other actions (in case your plugin calls other actions or shared values)

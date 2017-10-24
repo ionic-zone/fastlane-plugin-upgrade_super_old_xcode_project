@@ -1,10 +1,10 @@
 require 'xcodeproj'
 module Fastlane
   module Actions
-    class UpgradeSuperOldXcodeAction < Action
+    class UpgradeSuperOldXcodeProjectAction < Action
       def self.run(params)
         # print params
-        FastlaneCore::PrintTable.print_values(config: params, title: "Summary for UpgradeSuperOldXcodeAction")
+        FastlaneCore::PrintTable.print_values(config: params, title: "Summary for UpgradeSuperOldXcodeProjectAction")
 
         # create project.pbxproj path and check if file exists
         path = params[:path]

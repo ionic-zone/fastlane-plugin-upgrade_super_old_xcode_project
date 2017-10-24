@@ -1,15 +1,15 @@
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'fastlane/plugin/upgrade_super_old_xcode/version'
+require 'fastlane/plugin/upgrade_super_old_xcode_project/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'fastlane-plugin-upgrade_super_old_xcode'
-  spec.version       = Fastlane::UpgradeSuperOldXcode::VERSION
+  spec.name          = 'fastlane-plugin-upgrade_super_old_xcode_project'
+  spec.version       = Fastlane::UpgradeSuperOldXcodeProject::VERSION
   spec.author        = 'Jan Piotrowski'
   spec.email         = 'piotrowski+github@gmail.com'
 
   spec.summary       = 'Upgrades super old Xcode projects to Xcode 8'
-  # spec.homepage      = "https://github.com/<GITHUB_USERNAME>/fastlane-plugin-upgrade_super_old_xcode"
+  spec.homepage      = "https://github.com/ionic-zone/fastlane-plugin-upgrade_super_old_xcode_project"
   spec.license       = "MIT"
 
   spec.files         = Dir["lib/**/*"] + %w(README.md LICENSE)

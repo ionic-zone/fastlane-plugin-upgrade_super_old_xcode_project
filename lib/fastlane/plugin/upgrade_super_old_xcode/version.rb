@@ -1,5 +1,5 @@
 module Fastlane
-  module UpgradeSuperOldXcode
-    VERSION = "0.0.1"
+  module UpgradeSuperOldXcodeProject
+    VERSION = "0.0.2"
   end
 end

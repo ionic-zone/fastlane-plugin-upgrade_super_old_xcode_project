@@ -5,7 +5,7 @@
 
 This _fastlane_ plugin can upgrade super old Xcode project files to a format current tooling can work with (pre Xcode 8 to Xcode 8), by adding the missing attributes to the project config.
 
-It is 99% based on previous code that was part of [fastlane-plugin-update_project_codesigning (depreacted!)](https://github.com/hjanuschka/fastlane-plugin-update_project_codesigning) (which got merged into the core action [automatic_code_signing.rb](https://github.com/fastlane/fastlane/blob/master/fastlane/lib/fastlane/actions/automatic_code_signing.rb) - when the relevant code unfortunately got removed).
+It is 99% based on previous code that was part of [fastlane-plugin-update_project_codesigning (deprecated!)](https://github.com/hjanuschka/fastlane-plugin-update_project_codesigning) (which got merged into the core action [automatic_code_signing.rb](https://github.com/fastlane/fastlane/blob/master/fastlane/lib/fastlane/actions/automatic_code_signing.rb) - when the relevant code unfortunately got removed).
 
 
 ## Getting Started
